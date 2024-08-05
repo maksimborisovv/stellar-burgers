@@ -77,19 +77,51 @@ export const userSlice = createSlice({
         state.isAuthChecked = false;
       });
 
-    builder.addCase(getUser.fulfilled, (state, action) => {
-      state.user = action.payload.user;
-    });
+    builder
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isAuthChecked = true;
+        state.isAuthenticated = true;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.isAuthChecked = false;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.authError = action.error;
+        state.isAuthChecked = true;
+        state.isAuthenticated = false;
+      });
 
-    builder.addCase(updateUser.fulfilled, (state, action) => {
-      state.user = action.payload.user;
-    });
+    builder
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isAuthChecked = true;
+        state.isAuthenticated = true;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isAuthChecked = false;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.authError = action.error;
+        state.isAuthChecked = true;
+        state.isAuthenticated = false;
+      });
 
-    builder.addCase(logout.fulfilled, (state, action) => {
-      state.isAuthChecked = true;
-      state.isAuthenticated = false;
-      state.user = { email: '', name: '' };
-    });
+    builder
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isAuthChecked = true;
+        state.isAuthenticated = false;
+        state.user = { email: '', name: '' };
+      })
+      .addCase(logout.pending, (state) => {
+        state.isAuthChecked = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isAuthChecked = true;
+        state.isAuthenticated = false;
+        state.user = { email: '', name: '' };
+        state.authError = action.error;
+      });
   }
 });
 

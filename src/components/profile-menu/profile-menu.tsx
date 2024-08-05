@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ProfileMenuUI } from '@ui';
 import { useDispatch } from '../../services/store';
 import { logout } from '../../slices/userSlice';
@@ -10,9 +10,9 @@ export const ProfileMenu: FC = () => {
   const dispath = useDispatch();
 
   const handleLogout = () => {
+    dispath(logout());
     deleteCookie('accessToken');
     localStorage.removeItem('refreshToken');
-    dispath(logout());
   };
 
   return <ProfileMenuUI handleLogout={handleLogout} pathname={pathname} />;

@@ -10,12 +10,14 @@ import { ordersSlice } from '../slices/ordersSlice';
 import { ingredientsSlice } from '../slices/ingredientsSlice';
 import { userSlice } from '../slices/userSlice';
 import { profileOrdersSlice } from '../slices/profileOrdersSlice';
+import { constructorSlice } from '../slices/constructorSlice';
 
 const rootReducer = {
   [ordersSlice.name]: ordersSlice.reducer,
   [ingredientsSlice.name]: ingredientsSlice.reducer,
   [userSlice.name]: userSlice.reducer,
-  [profileOrdersSlice.name]: profileOrdersSlice.reducer
+  [profileOrdersSlice.name]: profileOrdersSlice.reducer,
+  [constructorSlice.name]: constructorSlice.reducer
 };
 
 const store = configureStore({

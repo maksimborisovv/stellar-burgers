@@ -10,19 +10,12 @@ import {
   selectIngredients,
   selectIsLoading
 } from '../../slices/ingredientsSlice';
-import { Preloader } from '@ui';
 
 const maxIngredients = 6;
 
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchIngredientsAll());
-  }, []);
-
-  /** TODO: взять переменную из стора */
   const ingredients: TIngredient[] = useSelector(selectIngredients);
 
   const orderInfo = useMemo(() => {
