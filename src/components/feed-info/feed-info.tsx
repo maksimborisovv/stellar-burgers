@@ -1,13 +1,13 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
-import { useSelector } from 'react-redux';
 import {
   selectOrders,
   selectTotal,
   selectTotalToday
 } from '../../slices/ordersSlice';
+import { useSelector } from '../../services/store';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
@@ -16,15 +16,15 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     .slice(0, 20);
 
 export const FeedInfo: FC = () => {
-  const orders: TOrder[] = useSelector(selectOrders);
+  const orders = useSelector(selectOrders);
   const feed = {
     total: useSelector(selectTotal),
     totalToday: useSelector(selectTotalToday)
   };
 
-  const readyOrders = getOrders(orders, 'done');
+  const readyOrders = useMemo(() => getOrders(orders, 'done'), orders);
 
-  const pendingOrders = getOrders(orders, 'pending');
+  const pendingOrders = useMemo(() => getOrders(orders, 'pending'), orders);
 
   return (
     <FeedInfoUI
